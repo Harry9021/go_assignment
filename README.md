@@ -1,7 +1,3 @@
-Here’s a clean and professional `README.md` based on your provided setup and configuration instructions:
-
----
-
 # Bidirectional ClickHouse & Flat File Data Ingestion Tool
 
 This project enables seamless data ingestion and transfer between ClickHouse and flat file formats like CSV, with a simple web interface and powerful backend capabilities.
