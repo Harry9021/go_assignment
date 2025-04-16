@@ -1,0 +1,9 @@
+name,path,type
+default,/var/lib/clickhouse/,Local
+diskPlainRewritableForSystemTables,ch-s3-255875f1-8b56-4557-8712-51d883269e15/system-tables/mergetree/c-indigo-px-77-server-65egik9-0/,ObjectStorage
+diskPlainRewritableForSystemTablesWithCache,ch-s3-255875f1-8b56-4557-8712-51d883269e15/system-tables/mergetree/c-indigo-px-77-server-65egik9-0/,ObjectStorage
+s3WithKeeperDisk,,ObjectStorage
+s3WithKeeperDiskWithCache,,ObjectStorage
+s3disk,/var/lib/clickhouse/disks/s3disk/,ObjectStorage
+s3diskForSampleData,,ObjectStorage
+s3diskWithCache,/var/lib/clickhouse/disks/s3disk/,ObjectStorage

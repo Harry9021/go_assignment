@@ -1,0 +1,274 @@
+event,name,description
+Query,Query,"Number of queries to be interpreted and potentially executed. Does not include queries that failed to parse or were rejected due to AST size limits, quota limits or limits on the number of simultaneously running queries. May include internal queries initiated by ClickHouse itself. Does not count subqueries."
+SelectQuery,SelectQuery,"Same as Query, but only for SELECT queries."
+InitialQuery,InitialQuery,"Same as Query, but only counts initial queries (see is_initial_query)."
+QueriesWithSubqueries,QueriesWithSubqueries,Count queries with all subqueries
+SelectQueriesWithSubqueries,SelectQueriesWithSubqueries,Count SELECT queries with all subqueries
+SelectQueriesWithPrimaryKeyUsage,SelectQueriesWithPrimaryKeyUsage,Count SELECT queries which use the primary key to evaluate the WHERE condition
+QueryTimeMicroseconds,QueryTimeMicroseconds,Total time of all queries.
+SelectQueryTimeMicroseconds,SelectQueryTimeMicroseconds,Total time of SELECT queries.
+OtherQueryTimeMicroseconds,OtherQueryTimeMicroseconds,Total time of queries that are not SELECT or INSERT.
+FileOpen,FileOpen,Number of files opened.
+Seek,Seek,Number of times the 'lseek' function was called.
+ReadBufferFromFileDescriptorRead,ReadBufferFromFileDescriptorRead,Number of reads (read/pread) from a file descriptor. Does not include sockets.
+ReadBufferFromFileDescriptorReadBytes,ReadBufferFromFileDescriptorReadBytes,"Number of bytes read from file descriptors. If the file is compressed, this will show the compressed data size."
+WriteBufferFromFileDescriptorWrite,WriteBufferFromFileDescriptorWrite,Number of writes (write/pwrite) to a file descriptor. Does not include sockets.
+WriteBufferFromFileDescriptorWriteBytes,WriteBufferFromFileDescriptorWriteBytes,"Number of bytes written to file descriptors. If the file is compressed, this will show compressed data size."
+FileSync,FileSync,Number of times the F_FULLFSYNC/fsync/fdatasync function was called for files.
+FileSyncElapsedMicroseconds,FileSyncElapsedMicroseconds,Total time spent waiting for F_FULLFSYNC/fsync/fdatasync syscall for files.
+ReadCompressedBytes,ReadCompressedBytes,"Number of bytes (the number of bytes before decompression) read from compressed sources (files, network)."
+CompressedReadBufferBlocks,CompressedReadBufferBlocks,"Number of compressed blocks (the blocks of data that are compressed independent of each other) read from compressed sources (files, network)."
+CompressedReadBufferBytes,CompressedReadBufferBytes,"Number of uncompressed bytes (the number of bytes after decompression) read from compressed sources (files, network)."
+OpenedFileCacheHits,OpenedFileCacheHits,"Number of times a file has been found in the opened file cache, so we didn't have to open it again."
+OpenedFileCacheMisses,OpenedFileCacheMisses,"Number of times a file has been found in the opened file cache, so we had to open it again."
+OpenedFileCacheMicroseconds,OpenedFileCacheMicroseconds,Amount of time spent executing OpenedFileCache methods.
+IOBufferAllocs,IOBufferAllocs,Number of allocations of IO buffers (for ReadBuffer/WriteBuffer).
+IOBufferAllocBytes,IOBufferAllocBytes,Number of bytes allocated for IO buffers (for ReadBuffer/WriteBuffer).
+ArenaAllocChunks,ArenaAllocChunks,Number of chunks allocated for memory Arena (used for GROUP BY and similar operations)
+ArenaAllocBytes,ArenaAllocBytes,Number of bytes allocated for memory Arena (used for GROUP BY and similar operations)
+FunctionExecute,FunctionExecute,"Number of SQL ordinary function calls (SQL functions are called on per-block basis, so this number represents the number of blocks)."
+TableFunctionExecute,TableFunctionExecute,Number of table function calls.
+MarkCacheHits,MarkCacheHits,"Number of times an entry has been found in the mark cache, so we didn't have to load a mark file."
+MarkCacheMisses,MarkCacheMisses,"Number of times an entry has not been found in the mark cache, so we had to load a mark file in memory, which is a costly operation, adding to query latency."
+CreatedReadBufferOrdinary,CreatedReadBufferOrdinary,Number of times ordinary read buffer was created for reading data (while choosing among other read methods).
+DiskReadElapsedMicroseconds,DiskReadElapsedMicroseconds,Total time spent waiting for read syscall. This include reads from page cache.
+DiskWriteElapsedMicroseconds,DiskWriteElapsedMicroseconds,Total time spent waiting for write syscall. This include writes to page cache.
+NetworkReceiveElapsedMicroseconds,NetworkReceiveElapsedMicroseconds,"Total time spent waiting for data to receive or receiving data from network. Only ClickHouse-related network interaction is included, not by 3rd party libraries."
+NetworkSendElapsedMicroseconds,NetworkSendElapsedMicroseconds,"Total time spent waiting for data to send to network or sending data to network. Only ClickHouse-related network interaction is included, not by 3rd party libraries."
+NetworkReceiveBytes,NetworkReceiveBytes,"Total number of bytes received from network. Only ClickHouse-related network interaction is included, not by 3rd party libraries."
+NetworkSendBytes,NetworkSendBytes,"Total number of bytes send to network. Only ClickHouse-related network interaction is included, not by 3rd party libraries."
+GlobalThreadPoolExpansions,GlobalThreadPoolExpansions,Counts the total number of times new threads have been added to the global thread pool. This metric indicates the frequency of expansions in the global thread pool to accommodate increased processing demands.
+GlobalThreadPoolThreadCreationMicroseconds,GlobalThreadPoolThreadCreationMicroseconds,Total time spent waiting for new threads to start.
+GlobalThreadPoolLockWaitMicroseconds,GlobalThreadPoolLockWaitMicroseconds,Total time threads have spent waiting for locks in the global thread pool.
+GlobalThreadPoolJobs,GlobalThreadPoolJobs,Counts the number of jobs that have been pushed to the global thread pool.
+GlobalThreadPoolJobWaitTimeMicroseconds,GlobalThreadPoolJobWaitTimeMicroseconds,"Measures the elapsed time from when a job is scheduled in the thread pool to when it is picked up for execution by a worker thread. This metric helps identify delays in job processing, indicating the responsiveness of the thread pool to new tasks."
+LocalThreadPoolExpansions,LocalThreadPoolExpansions,Counts the total number of times threads have been borrowed from the global thread pool to expand local thread pools.
+LocalThreadPoolShrinks,LocalThreadPoolShrinks,Counts the total number of times threads have been returned to the global thread pool from local thread pools.
+LocalThreadPoolThreadCreationMicroseconds,LocalThreadPoolThreadCreationMicroseconds,Total time local thread pools have spent waiting to borrow a thread from the global pool.
+LocalThreadPoolLockWaitMicroseconds,LocalThreadPoolLockWaitMicroseconds,Total time threads have spent waiting for locks in the local thread pools.
+LocalThreadPoolJobs,LocalThreadPoolJobs,Counts the number of jobs that have been pushed to the local thread pools.
+LocalThreadPoolBusyMicroseconds,LocalThreadPoolBusyMicroseconds,Total time threads have spent executing the actual work.
+LocalThreadPoolJobWaitTimeMicroseconds,LocalThreadPoolJobWaitTimeMicroseconds,"Measures the elapsed time from when a job is scheduled in the thread pool to when it is picked up for execution by a worker thread. This metric helps identify delays in job processing, indicating the responsiveness of the thread pool to new tasks."
+InsertedRows,InsertedRows,Number of rows INSERTed to all tables.
+InsertedBytes,InsertedBytes,Number of bytes (uncompressed; for columns as they stored in memory) INSERTed to all tables.
+ZooKeeperInit,ZooKeeperInit,Number of times connection with ZooKeeper has been established.
+ZooKeeperTransactions,ZooKeeperTransactions,"Number of ZooKeeper operations, which include both read and write operations as well as multi-transactions."
+ZooKeeperList,ZooKeeperList,Number of 'list' (getChildren) requests to ZooKeeper.
+ZooKeeperCreate,ZooKeeperCreate,Number of 'create' requests to ZooKeeper.
+ZooKeeperRemove,ZooKeeperRemove,Number of 'remove' requests to ZooKeeper.
+ZooKeeperExists,ZooKeeperExists,Number of 'exists' requests to ZooKeeper.
+ZooKeeperGet,ZooKeeperGet,Number of 'get' requests to ZooKeeper.
+ZooKeeperSet,ZooKeeperSet,Number of 'set' requests to ZooKeeper.
+ZooKeeperMulti,ZooKeeperMulti,Number of 'multi' requests to ZooKeeper (compound transactions).
+ZooKeeperSync,ZooKeeperSync,Number of 'sync' requests to ZooKeeper. These requests are rarely needed or usable.
+ZooKeeperClose,ZooKeeperClose,Number of times connection with ZooKeeper has been closed voluntary.
+ZooKeeperWatchResponse,ZooKeeperWatchResponse,Number of times watch notification has been received from ZooKeeper.
+ZooKeeperWaitMicroseconds,ZooKeeperWaitMicroseconds,"Number of microseconds spent waiting for responses from ZooKeeper after creating a request, summed across all the requesting threads."
+ZooKeeperBytesSent,ZooKeeperBytesSent,Number of bytes send over network while communicating with ZooKeeper.
+ZooKeeperBytesReceived,ZooKeeperBytesReceived,Number of bytes received over network while communicating with ZooKeeper.
+CompileFunction,CompileFunction,Number of times a compilation of generated LLVM code (to create fused function for complex expressions) was initiated.
+CompileExpressionsMicroseconds,CompileExpressionsMicroseconds,Total time spent for compilation of expressions to LLVM code.
+CompileExpressionsBytes,CompileExpressionsBytes,Number of bytes used for expressions compilation.
+SelectedParts,SelectedParts,Number of data parts selected to read from a MergeTree table.
+SelectedPartsTotal,SelectedPartsTotal,Number of total data parts before selecting which ones to read from a MergeTree table.
+SelectedRanges,SelectedRanges,Number of (non-adjacent) ranges in all data parts selected to read from a MergeTree table.
+SelectedMarks,SelectedMarks,Number of marks (index granules) selected to read from a MergeTree table.
+SelectedMarksTotal,SelectedMarksTotal,Number of total marks (index granules) before selecting which ones to read from a MergeTree table.
+SelectedRows,SelectedRows,Number of rows SELECTed from all tables.
+SelectedBytes,SelectedBytes,Number of bytes (uncompressed; for columns as they stored in memory) SELECTed from all tables.
+RowsReadByMainReader,RowsReadByMainReader,Number of rows read from MergeTree tables by the main reader (after PREWHERE step).
+RowsReadByPrewhereReaders,RowsReadByPrewhereReaders,Number of rows read from MergeTree tables (in total) by prewhere readers.
+LoadedDataParts,LoadedDataParts,Number of data parts loaded by MergeTree tables during initialization.
+LoadedDataPartsMicroseconds,LoadedDataPartsMicroseconds,Microseconds spent by MergeTree tables for loading data parts during initialization.
+WaitMarksLoadMicroseconds,WaitMarksLoadMicroseconds,Time spent loading marks
+BackgroundLoadingMarksTasks,BackgroundLoadingMarksTasks,Number of background tasks for loading marks
+LoadedMarksFiles,LoadedMarksFiles,Number of mark files loaded.
+LoadedMarksCount,LoadedMarksCount,Number of marks loaded (total across columns).
+LoadedMarksMemoryBytes,LoadedMarksMemoryBytes,Size of in-memory representations of loaded marks.
+LoadedPrimaryIndexFiles,LoadedPrimaryIndexFiles,Number of primary index files loaded.
+LoadedPrimaryIndexRows,LoadedPrimaryIndexRows,Number of rows of primary key loaded.
+LoadedPrimaryIndexBytes,LoadedPrimaryIndexBytes,Number of rows of primary key loaded.
+Merge,Merge,Number of launched background merges.
+MergeSourceParts,MergeSourceParts,Number of source parts scheduled for merges.
+MergedRows,MergedRows,Rows read for background merges. This is the number of rows before merge.
+MergedColumns,MergedColumns,Number of columns merged during the horizontal stage of merges.
+MergedUncompressedBytes,MergedUncompressedBytes,Uncompressed bytes (for columns as they stored in memory) that was read for background merges. This is the number before merge.
+MergeTotalMilliseconds,MergeTotalMilliseconds,Total time spent for background merges
+MergeExecuteMilliseconds,MergeExecuteMilliseconds,Total busy time spent for execution of background merges
+MergeHorizontalStageTotalMilliseconds,MergeHorizontalStageTotalMilliseconds,Total time spent for horizontal stage of background merges
+MergeHorizontalStageExecuteMilliseconds,MergeHorizontalStageExecuteMilliseconds,Total busy time spent for execution of horizontal stage of background merges
+MergeVerticalStageTotalMilliseconds,MergeVerticalStageTotalMilliseconds,Total time spent for vertical stage of background merges
+MergeProjectionStageTotalMilliseconds,MergeProjectionStageTotalMilliseconds,Total time spent for projection stage of background merges
+MergeProjectionStageExecuteMilliseconds,MergeProjectionStageExecuteMilliseconds,Total busy time spent for execution of projection stage of background merges
+MergePrewarmStageTotalMilliseconds,MergePrewarmStageTotalMilliseconds,Total time spent for prewarm stage of background merges
+MergePrewarmStageExecuteMilliseconds,MergePrewarmStageExecuteMilliseconds,Total busy time spent for execution of prewarm stage of background merges
+MergingSortedMilliseconds,MergingSortedMilliseconds,Total time spent while merging sorted columns
+MergeTreeDataWriterRows,MergeTreeDataWriterRows,Number of rows INSERTed to MergeTree tables.
+MergeTreeDataWriterUncompressedBytes,MergeTreeDataWriterUncompressedBytes,Uncompressed bytes (for columns as they stored in memory) INSERTed to MergeTree tables.
+MergeTreeDataWriterCompressedBytes,MergeTreeDataWriterCompressedBytes,Bytes written to filesystem for data INSERTed to MergeTree tables.
+MergeTreeDataWriterBlocks,MergeTreeDataWriterBlocks,Number of blocks INSERTed to MergeTree tables. Each block forms a data part of level zero.
+MergeTreeDataWriterBlocksAlreadySorted,MergeTreeDataWriterBlocksAlreadySorted,Number of blocks INSERTed to MergeTree tables that appeared to be already sorted.
+MergeTreeDataWriterSortingBlocksMicroseconds,MergeTreeDataWriterSortingBlocksMicroseconds,Time spent sorting blocks
+MergeTreeDataWriterMergingBlocksMicroseconds,MergeTreeDataWriterMergingBlocksMicroseconds,Time spent merging input blocks (for special MergeTree engines)
+InsertedCompactParts,InsertedCompactParts,Number of parts inserted in Compact format.
+MergedIntoCompactParts,MergedIntoCompactParts,Number of parts merged into Compact format.
+ContextLock,ContextLock,Number of times the lock of Context was acquired or tried to acquire. This is global lock.
+ContextLockWaitMicroseconds,ContextLockWaitMicroseconds,Context lock wait time in microseconds
+RWLockAcquiredReadLocks,RWLockAcquiredReadLocks,Number of times a read lock was acquired (in a heavy RWLock).
+RWLockReadersWaitMilliseconds,RWLockReadersWaitMilliseconds,Total time spent waiting for a read lock to be acquired (in a heavy RWLock).
+PartsLockHoldMicroseconds,PartsLockHoldMicroseconds,Total time spent holding data parts lock in MergeTree tables
+PartsLockWaitMicroseconds,PartsLockWaitMicroseconds,Total time spent waiting for data parts lock in MergeTree tables
+RealTimeMicroseconds,RealTimeMicroseconds,Total (wall clock) time spent in processing (queries and other tasks) threads (note that this is a sum).
+UserTimeMicroseconds,UserTimeMicroseconds,"Total time spent in processing (queries and other tasks) threads executing CPU instructions in user mode. This includes time CPU pipeline was stalled due to main memory access, cache misses, branch mispredictions, hyper-threading, etc."
+SystemTimeMicroseconds,SystemTimeMicroseconds,"Total time spent in processing (queries and other tasks) threads executing CPU instructions in OS kernel mode. This is time spent in syscalls, excluding waiting time during blocking syscalls."
+MemoryAllocatorPurge,MemoryAllocatorPurge,Total number of times memory allocator purge was requested
+MemoryAllocatorPurgeTimeMicroseconds,MemoryAllocatorPurgeTimeMicroseconds,Total number of times memory allocator purge was requested
+SoftPageFaults,SoftPageFaults,"The number of soft page faults in query execution threads. Soft page fault usually means a miss in the memory allocator cache, which requires a new memory mapping from the OS and subsequent allocation of a page of physical memory."
+OSCPUWaitMicroseconds,OSCPUWaitMicroseconds,"Total time a thread was ready for execution but waiting to be scheduled by OS, from the OS point of view."
+OSCPUVirtualTimeMicroseconds,OSCPUVirtualTimeMicroseconds,CPU time spent seen by OS. Does not include involuntary waits due to virtualization.
+OSReadBytes,OSReadBytes,"Number of bytes read from disks or block devices. Doesn't include bytes read from page cache. May include excessive data due to block size, readahead, etc."
+OSWriteBytes,OSWriteBytes,Number of bytes written to disks or block devices. Doesn't include bytes that are in page cache dirty pages. May not include data that was written by OS asynchronously.
+OSReadChars,OSReadChars,"Number of bytes read from filesystem, including page cache."
+OSWriteChars,OSWriteChars,"Number of bytes written to filesystem, including page cache."
+QueryProfilerRuns,QueryProfilerRuns,Number of times QueryProfiler had been run.
+S3ReadMicroseconds,S3ReadMicroseconds,Time of GET and HEAD requests to S3 storage.
+S3ReadRequestsCount,S3ReadRequestsCount,Number of GET and HEAD requests to S3 storage.
+S3ReadRequestsErrors,S3ReadRequestsErrors,Number of non-throttling errors in GET and HEAD requests to S3 storage.
+S3WriteMicroseconds,S3WriteMicroseconds,"Time of POST, DELETE, PUT and PATCH requests to S3 storage."
+S3WriteRequestsCount,S3WriteRequestsCount,"Number of POST, DELETE, PUT and PATCH requests to S3 storage."
+DiskS3ReadMicroseconds,DiskS3ReadMicroseconds,Time of GET and HEAD requests to DiskS3 storage.
+DiskS3ReadRequestsCount,DiskS3ReadRequestsCount,Number of GET and HEAD requests to DiskS3 storage.
+DiskS3ReadRequestsErrors,DiskS3ReadRequestsErrors,Number of non-throttling errors in GET and HEAD requests to DiskS3 storage.
+DiskS3WriteMicroseconds,DiskS3WriteMicroseconds,"Time of POST, DELETE, PUT and PATCH requests to DiskS3 storage."
+DiskS3WriteRequestsCount,DiskS3WriteRequestsCount,"Number of POST, DELETE, PUT and PATCH requests to DiskS3 storage."
+S3DeleteObjects,S3DeleteObjects,Number of S3 API DeleteObject(s) calls.
+S3ListObjects,S3ListObjects,Number of S3 API ListObjects calls.
+S3HeadObject,S3HeadObject,Number of S3 API HeadObject calls.
+S3PutObject,S3PutObject,Number of S3 API PutObject calls.
+S3GetObject,S3GetObject,Number of S3 API GetObject calls.
+DiskS3DeleteObjects,DiskS3DeleteObjects,Number of DiskS3 API DeleteObject(s) calls.
+DiskS3ListObjects,DiskS3ListObjects,Number of DiskS3 API ListObjects calls.
+DiskS3HeadObject,DiskS3HeadObject,Number of DiskS3 API HeadObject calls.
+DiskS3PutObject,DiskS3PutObject,Number of DiskS3 API PutObject calls.
+DiskS3GetObject,DiskS3GetObject,Number of DiskS3 API GetObject calls.
+DiskPlainRewritableS3DirectoryCreated,DiskPlainRewritableS3DirectoryCreated,Number of directories created by the 'plain_rewritable' metadata storage for S3ObjectStorage.
+DiskPlainRewritableS3DirectoryRemoved,DiskPlainRewritableS3DirectoryRemoved,Number of directories removed by the 'plain_rewritable' metadata storage for S3ObjectStorage.
+S3Clients,S3Clients,Number of created S3 clients.
+ReadBufferFromS3Microseconds,ReadBufferFromS3Microseconds,Time spent on reading from S3.
+ReadBufferFromS3InitMicroseconds,ReadBufferFromS3InitMicroseconds,Time spent initializing connection to S3.
+ReadBufferFromS3Bytes,ReadBufferFromS3Bytes,Bytes read from S3.
+WriteBufferFromS3Microseconds,WriteBufferFromS3Microseconds,Time spent on writing to S3.
+WriteBufferFromS3Bytes,WriteBufferFromS3Bytes,Bytes written to S3.
+CachedReadBufferReadFromCacheHits,CachedReadBufferReadFromCacheHits,Number of times the read from filesystem cache hit the cache.
+CachedReadBufferReadFromCacheMisses,CachedReadBufferReadFromCacheMisses,Number of times the read from filesystem cache miss the cache.
+CachedReadBufferReadFromSourceMicroseconds,CachedReadBufferReadFromSourceMicroseconds,"Time reading from filesystem cache source (from remote filesystem, etc)"
+CachedReadBufferReadFromCacheMicroseconds,CachedReadBufferReadFromCacheMicroseconds,Time reading from filesystem cache
+CachedReadBufferReadFromSourceBytes,CachedReadBufferReadFromSourceBytes,"Bytes read from filesystem cache source (from remote fs, etc)"
+CachedReadBufferReadFromCacheBytes,CachedReadBufferReadFromCacheBytes,Bytes read from filesystem cache
+CachedReadBufferCacheWriteBytes,CachedReadBufferCacheWriteBytes,"Bytes written from source (remote fs, etc) to filesystem cache"
+CachedReadBufferCacheWriteMicroseconds,CachedReadBufferCacheWriteMicroseconds,Time spent writing data into filesystem cache
+CachedReadBufferCreateBufferMicroseconds,CachedReadBufferCreateBufferMicroseconds,Prepare buffer time
+CachedWriteBufferCacheWriteBytes,CachedWriteBufferCacheWriteBytes,"Bytes written from source (remote fs, etc) to filesystem cache"
+CachedWriteBufferCacheWriteMicroseconds,CachedWriteBufferCacheWriteMicroseconds,Time spent writing data into filesystem cache
+FilesystemCacheLoadMetadataMicroseconds,FilesystemCacheLoadMetadataMicroseconds,Time spent loading filesystem cache metadata
+FilesystemCacheBackgroundDownloadQueuePush,FilesystemCacheBackgroundDownloadQueuePush,Number of file segments sent for background download in filesystem cache
+FilesystemCacheLockKeyMicroseconds,FilesystemCacheLockKeyMicroseconds,Lock cache key time
+FilesystemCacheLockMetadataMicroseconds,FilesystemCacheLockMetadataMicroseconds,Lock filesystem cache metadata time
+FilesystemCacheReserveMicroseconds,FilesystemCacheReserveMicroseconds,Filesystem cache space reservation time
+FilesystemCacheGetOrSetMicroseconds,FilesystemCacheGetOrSetMicroseconds,Filesystem cache getOrSet() time
+FilesystemCacheGetMicroseconds,FilesystemCacheGetMicroseconds,Filesystem cache get() time
+FileSegmentCompleteMicroseconds,FileSegmentCompleteMicroseconds,Duration of FileSegment::complete() in filesystem cache
+FileSegmentLockMicroseconds,FileSegmentLockMicroseconds,Lock file segment time
+FileSegmentWriteMicroseconds,FileSegmentWriteMicroseconds,File segment write() time
+FileSegmentUseMicroseconds,FileSegmentUseMicroseconds,File segment use() time
+FileSegmentHolderCompleteMicroseconds,FileSegmentHolderCompleteMicroseconds,File segments holder complete() time
+FileSegmentFailToIncreasePriority,FileSegmentFailToIncreasePriority,Number of times the priority was not increased due to a high contention on the cache lock
+FilesystemCacheHoldFileSegments,FilesystemCacheHoldFileSegments,"Filesystem cache file segments count, which were hold"
+FilesystemCacheUnusedHoldFileSegments,FilesystemCacheUnusedHoldFileSegments,"Filesystem cache file segments count, which were hold, but not used (because of seek or LIMIT n, etc)"
+RemoteFSSeeks,RemoteFSSeeks,Total number of seeks for async buffer
+RemoteFSPrefetches,RemoteFSPrefetches,Number of prefetches made with asynchronous reading from remote filesystem
+RemoteFSCancelledPrefetches,RemoteFSCancelledPrefetches,Number of cancelled prefecthes (because of seek)
+RemoteFSUnusedPrefetches,RemoteFSUnusedPrefetches,Number of prefetches pending at buffer destruction
+RemoteFSPrefetchedReads,RemoteFSPrefetchedReads,Number of reads from prefecthed buffer
+RemoteFSPrefetchedBytes,RemoteFSPrefetchedBytes,Number of bytes from prefecthed buffer
+RemoteFSUnprefetchedReads,RemoteFSUnprefetchedReads,Number of reads from unprefetched buffer
+RemoteFSUnprefetchedBytes,RemoteFSUnprefetchedBytes,Number of bytes from unprefetched buffer
+RemoteFSBuffers,RemoteFSBuffers,Number of buffers created for asynchronous reading from remote filesystem
+WaitPrefetchTaskMicroseconds,WaitPrefetchTaskMicroseconds,Time spend waiting for prefetched reader
+ThreadpoolReaderTaskMicroseconds,ThreadpoolReaderTaskMicroseconds,Time spent getting the data in asynchronous reading
+ThreadpoolReaderPrepareMicroseconds,ThreadpoolReaderPrepareMicroseconds,Time spent on preparation (e.g. call to reader seek() method)
+ThreadpoolReaderReadBytes,ThreadpoolReaderReadBytes,Bytes read from a threadpool task in asynchronous reading
+ThreadpoolReaderSubmitReadSynchronously,ThreadpoolReaderSubmitReadSynchronously,How many times we haven't scheduled a task on the thread pool and read synchronously instead
+ThreadpoolReaderSubmitReadSynchronouslyBytes,ThreadpoolReaderSubmitReadSynchronouslyBytes,How many bytes were read synchronously
+ThreadpoolReaderSubmitReadSynchronouslyMicroseconds,ThreadpoolReaderSubmitReadSynchronouslyMicroseconds,How much time we spent reading synchronously
+ThreadpoolReaderSubmitLookupInCacheMicroseconds,ThreadpoolReaderSubmitLookupInCacheMicroseconds,How much time we spent checking if content is cached
+FileSegmentWaitReadBufferMicroseconds,FileSegmentWaitReadBufferMicroseconds,Metric per file segment. Time spend waiting for internal read buffer (includes cache waiting)
+FileSegmentReadMicroseconds,FileSegmentReadMicroseconds,Metric per file segment. Time spend reading from file
+FileSegmentCacheWriteMicroseconds,FileSegmentCacheWriteMicroseconds,Metric per file segment. Time spend writing data to cache
+FileSegmentUsedBytes,FileSegmentUsedBytes,Metric per file segment. How many bytes were actually used from current file segment
+ThreadPoolReaderPageCacheMiss,ThreadPoolReaderPageCacheMiss,Number of times the read inside ThreadPoolReader was not done from page cache and was hand off to thread pool.
+ThreadPoolReaderPageCacheMissBytes,ThreadPoolReaderPageCacheMissBytes,Number of bytes read inside ThreadPoolReader when read was not done from page cache and was hand off to thread pool.
+ThreadPoolReaderPageCacheMissElapsedMicroseconds,ThreadPoolReaderPageCacheMissElapsedMicroseconds,Time spent reading data inside the asynchronous job in ThreadPoolReader - when read was not done from the page cache.
+SynchronousReadWaitMicroseconds,SynchronousReadWaitMicroseconds,Time spent in waiting for synchronous reads in asynchronous local read.
+AsynchronousRemoteReadWaitMicroseconds,AsynchronousRemoteReadWaitMicroseconds,Time spent in waiting for asynchronous remote reads.
+SynchronousRemoteReadWaitMicroseconds,SynchronousRemoteReadWaitMicroseconds,Time spent in waiting for synchronous remote reads.
+MainConfigLoads,MainConfigLoads,Number of times the main configuration was reloaded.
+AggregationOptimizedEqualRangesOfKeys,AggregationOptimizedEqualRangesOfKeys,For how many blocks optimization of equal ranges of keys was applied
+MetadataFromKeeperCacheHit,MetadataFromKeeperCacheHit,Number of times an object storage metadata request was answered from cache without making request to Keeper
+MetadataFromKeeperCacheMiss,MetadataFromKeeperCacheMiss,Number of times an object storage metadata request had to be answered from Keeper
+MetadataFromKeeperTransactionCommit,MetadataFromKeeperTransactionCommit,Number of times metadata transaction commit was attempted
+MetadataFromKeeperCleanupTransactionCommit,MetadataFromKeeperCleanupTransactionCommit,Number of times metadata transaction commit for deleted objects cleanup was attempted
+MetadataFromKeeperOperations,MetadataFromKeeperOperations,Number of times a request was made to Keeper
+MetadataFromKeeperIndividualOperations,MetadataFromKeeperIndividualOperations,Number of paths read or written by single or multi requests to Keeper
+SharedMergeTreeMetadataCacheHintLoadedFromCache,SharedMergeTreeMetadataCacheHintLoadedFromCache,Number of times metadata cache hint was found without going to Keeper
+ScalarSubqueriesCacheMiss,ScalarSubqueriesCacheMiss,Number of times a read from a scalar subquery was not cached and had to be calculated completely
+ServerStartupMilliseconds,ServerStartupMilliseconds,Time elapsed from starting server to listening to sockets in milliseconds
+MergerMutatorPrepareRangesForMergeElapsedMicroseconds,MergerMutatorPrepareRangesForMergeElapsedMicroseconds,Time spent to prepare parts ranges which can be merged according to merge predicate.
+MergerMutatorSelectPartsForMergeElapsedMicroseconds,MergerMutatorSelectPartsForMergeElapsedMicroseconds,Time spent to select parts from ranges which can be merged.
+MergerMutatorRangesForMergeCount,MergerMutatorRangesForMergeCount,Amount of candidate ranges for merge
+MergerMutatorPartsInRangesForMergeCount,MergerMutatorPartsInRangesForMergeCount,Amount of candidate parts for merge
+MergerMutatorSelectRangePartsCount,MergerMutatorSelectRangePartsCount,Amount of parts in selected range for merge
+AsyncLoaderWaitMicroseconds,AsyncLoaderWaitMicroseconds,Total time a query was waiting for async loader jobs.
+LogTrace,LogTrace,Number of log messages with level Trace
+LogDebug,LogDebug,Number of log messages with level Debug
+LogInfo,LogInfo,Number of log messages with level Info
+LogWarning,LogWarning,Number of log messages with level Warning
+LoggerElapsedNanoseconds,LoggerElapsedNanoseconds,Cumulative time spend in logging
+InterfaceHTTPSendBytes,InterfaceHTTPSendBytes,Number of bytes sent through HTTP interfaces
+InterfaceHTTPReceiveBytes,InterfaceHTTPReceiveBytes,Number of bytes received through HTTP interfaces
+InterfaceNativeSendBytes,InterfaceNativeSendBytes,Number of bytes sent through native interfaces
+InterfaceNativeReceiveBytes,InterfaceNativeReceiveBytes,Number of bytes received through native interfaces
+SharedMergeTreeVirtualPartsUpdates,SharedMergeTreeVirtualPartsUpdates,Virtual parts update count
+SharedMergeTreeVirtualPartsUpdatesByLeader,SharedMergeTreeVirtualPartsUpdatesByLeader,Virtual parts updates by leader
+SharedMergeTreeVirtualPartsUpdateMicroseconds,SharedMergeTreeVirtualPartsUpdateMicroseconds,Virtual parts update microseconds
+SharedMergeTreeVirtualPartsUpdatesFromZooKeeper,SharedMergeTreeVirtualPartsUpdatesFromZooKeeper,Virtual parts updates count from ZooKeeper
+SharedMergeTreeVirtualPartsUpdatesFromZooKeeperMicroseconds,SharedMergeTreeVirtualPartsUpdatesFromZooKeeperMicroseconds,Virtual parts updates from ZooKeeper microseconds
+SharedMergeTreeVirtualPartsUpdatesPeerNotFound,SharedMergeTreeVirtualPartsUpdatesPeerNotFound,Virtual updates from peer failed because no one found
+SharedMergeTreeVirtualPartsUpdatesForMergesOrStatus,SharedMergeTreeVirtualPartsUpdatesForMergesOrStatus,Virtual parts updates from non-default background job
+SharedMergeTreeVirtualPartsUpdatesLeaderSuccessfulElection,SharedMergeTreeVirtualPartsUpdatesLeaderSuccessfulElection,Virtual parts updates leader election successful
+SharedMergeTreeMergeMutationAssignmentAttempt,SharedMergeTreeMergeMutationAssignmentAttempt,How many times we tried to assign merge or mutation
+SharedMergeTreeMergeMutationAssignmentFailedWithNothingToDo,SharedMergeTreeMergeMutationAssignmentFailedWithNothingToDo,How many times we tried to assign merge or mutation and failed because nothing to merge
+SharedMergeTreeOutdatedPartsConfirmationInvocations,SharedMergeTreeOutdatedPartsConfirmationInvocations,How many invocations were made to confirm outdated parts
+SharedMergeTreeMergeSelectingTaskMicroseconds,SharedMergeTreeMergeSelectingTaskMicroseconds,Merge selecting task microseconds for SMT
+SharedMergeTreeScheduleDataProcessingJob,SharedMergeTreeScheduleDataProcessingJob,How many times scheduleDataProcessingJob called/
+SharedMergeTreeScheduleDataProcessingJobNothingToScheduled,SharedMergeTreeScheduleDataProcessingJobNothingToScheduled,How many times scheduleDataProcessingJob called but nothing to do
+SharedMergeTreeScheduleDataProcessingJobMicroseconds,SharedMergeTreeScheduleDataProcessingJobMicroseconds,scheduleDataProcessingJob execute time
+SharedMergeTreeHandleBlockingPartsMicroseconds,SharedMergeTreeHandleBlockingPartsMicroseconds,Time of handling blocking parts in scheduleDataProcessingJob 
+SharedMergeTreeHandleFetchPartsMicroseconds,SharedMergeTreeHandleFetchPartsMicroseconds,Time of handling fetched parts in scheduleDataProcessingJob
+SharedMergeTreeHandleOutdatedPartsMicroseconds,SharedMergeTreeHandleOutdatedPartsMicroseconds,Time of handling outdated parts in scheduleDataProcessingJob
+SharedMergeTreeTryUpdateDiskMetadataCacheForPartMicroseconds,SharedMergeTreeTryUpdateDiskMetadataCacheForPartMicroseconds,Time of tryUpdateDiskMetadataCacheForPart in scheduleDataProcessingJob
+DiskConnectionsCreated,DiskConnectionsCreated,Number of created connections for disk
+DiskConnectionsReused,DiskConnectionsReused,Number of reused connections for disk
+DiskConnectionsPreserved,DiskConnectionsPreserved,Number of preserved connections for disk
+DiskConnectionsExpired,DiskConnectionsExpired,Number of expired connections for disk
+DiskConnectionsElapsedMicroseconds,DiskConnectionsElapsedMicroseconds,Total time spend on creating connections for disk
+HTTPConnectionsCreated,HTTPConnectionsCreated,Number of created http connections
+HTTPConnectionsPreserved,HTTPConnectionsPreserved,Number of preserved http connections
+HTTPConnectionsElapsedMicroseconds,HTTPConnectionsElapsedMicroseconds,Total time spend on creating http connections
+AddressesDiscovered,AddressesDiscovered,Total count of new addresses in dns resolve results for http connections
+ReadWriteBufferFromHTTPRequestsSent,ReadWriteBufferFromHTTPRequestsSent,Number of HTTP requests sent by ReadWriteBufferFromHTTP
+ReadWriteBufferFromHTTPBytes,ReadWriteBufferFromHTTPBytes,Total size of payload bytes received and sent by ReadWriteBufferFromHTTP. Doesn't include HTTP headers.
+ConcurrencyControlSlotsGranted,ConcurrencyControlSlotsGranted,Number of CPU slot granted according to guarantee of 1 thread per query and for queries with setting 'use_concurrency_control' = 0
+ConcurrencyControlSlotsAcquired,ConcurrencyControlSlotsAcquired,Total number of CPU slot acquired
+MemoryWorkerRun,MemoryWorkerRun,Number of runs done by MemoryWorker in background
+MemoryWorkerRunElapsedMicroseconds,MemoryWorkerRunElapsedMicroseconds,Total time spent by MemoryWorker for background work

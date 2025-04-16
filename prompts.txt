@@ -1,0 +1,8 @@
+1){given the pdf assignment part} then explain me the needes of the project we need to meet in this assignment
+2){backend/
+├── main.go
+├── clickhouse.go
+├── flatfile.go
+├── config.go
+└── handlers.go} this is my file structure for backend frame me the basic structure of the project
+3)build the basic structure of frontend using react + tailwindcss

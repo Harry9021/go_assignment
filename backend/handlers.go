@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	// "log"
+	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -109,8 +110,10 @@ func handlePreviewData(w http.ResponseWriter, r *http.Request) {
 	var data []map[string]interface{}
 	var err error
 
+	log.Printf("SelectedColumns: %v", req.Source)
 	switch req.Source {
 	case SourceClickHouse:
+		log.Printf("hiii it's clickhouse")
 		client, err := NewClickHouseClient(req.ClickHouseConf)
 		if err != nil {
 			WriteJSONResponse(w, http.StatusInternalServerError, NewErrorResponse("Failed to connect to ClickHouse", err))
@@ -121,15 +124,25 @@ func handlePreviewData(w http.ResponseWriter, r *http.Request) {
 		// Check if it's a join operation
 		if len(req.SelectedTables) > 1 && req.JoinCondition != "" {
 			data, err = client.JoinTables(ctx, req.SelectedTables, req.JoinCondition, req.SelectedColumns, limit)
+			if err != nil {
+				WriteJSONResponse(w, http.StatusInternalServerError, NewErrorResponse("Failed to join tables", err))
+				return
+			}
 		} else {
 			tableName := req.TableName
 			if tableName == "" && len(req.SelectedTables) > 0 {
 				tableName = req.SelectedTables[0]
 			}
 			data, err = client.FetchData(ctx, tableName, req.SelectedColumns, limit)
+			log.Printf("Data: %v", data)
+			if err != nil {
+				WriteJSONResponse(w, http.StatusInternalServerError, NewErrorResponse("Failed to fetch data", err))
+				return
+			}
 		}
 
 	case SourceFlatFile:
+		log.Printf("hiii it's flatfile")
 		client := NewFlatFileClient(req.FlatFileConf)
 		data, err = client.PreviewData(limit)
 
@@ -217,13 +230,15 @@ func handleIngestion(w http.ResponseWriter, r *http.Request) {
 	case SourceClickHouse:
 		// Connect to ClickHouse target
 		targetClient, err := NewClickHouseClient(req.ClickHouseConf)
+		log.Printf("hiii it's clickhouse as target")
+		log.Printf("this is req tablename %v", req.FlatFileConf.FileName)
 		if err != nil {
 			WriteJSONResponse(w, http.StatusInternalServerError, NewErrorResponse("Failed to connect to ClickHouse target", err))
 			return
 		}
 		defer targetClient.Close()
 
-		recordCount, err = targetClient.ImportDataFromFlatFile(ctx, req.TableName, sourceData)
+		recordCount, err = targetClient.ImportDataFromFlatFile(ctx, SanitizeTableNameFromFileName(req.FlatFileConf.FileName), sourceData)
 		if err != nil {
 			WriteJSONResponse(w, http.StatusInternalServerError, NewErrorResponse("Failed to import data to ClickHouse", err))
 			return
@@ -244,6 +259,30 @@ func handleIngestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	WriteJSONResponse(w, http.StatusOK, NewSuccessResponse("Data ingestion completed successfully", nil, recordCount))
+}
+
+// SanitizeTableNameFromFileName creates a valid table name from a file name
+func SanitizeTableNameFromFileName(fileName string) string {
+    // Remove file extension
+    baseName := fileName
+    if idx := strings.LastIndex(fileName, "."); idx != -1 {
+        baseName = fileName[:idx]
+    }
+    
+    // Replace special characters with underscores
+    sanitized := strings.Map(func(r rune) rune {
+        if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
+            return r
+        }
+        return '_'
+    }, baseName)
+    
+    // Ensure it starts with a letter
+    if len(sanitized) > 0 && (sanitized[0] >= '0' && sanitized[0] <= '9') {
+        sanitized = "t_" + sanitized
+    }
+    
+    return sanitized
 }
 
 // enableCORS enables CORS for all requests
